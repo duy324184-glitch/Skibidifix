@@ -1,0 +1,280 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+
+-- 🌌 INTRO GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "GraiIntro"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Nền tối nhẹ
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1,0,1,0)
+bg.BackgroundColor3 = Color3.fromRGB(0,0,0)
+bg.BackgroundTransparency = 0.3
+bg.Parent = gui
+
+-- Logo Image
+local logo = Instance.new("ImageLabel")
+logo.Parent = gui
+logo.AnchorPoint = Vector2.new(0.5,0.5)
+logo.Position = UDim2.new(0.5,0,0.5,0)
+logo.Size = UDim2.new(0,0,0,0) -- bắt đầu nhỏ rồi zoom
+logo.BackgroundTransparency = 1
+logo.Image = "http://www.roblox.com/asset/?id= 107480130072331"
+logo.ImageTransparency = 1
+
+-- Hiện logo (zoom + fade in)
+TweenService:Create(logo, TweenInfo.new(1.5, Enum.EasingStyle.Elastic, Enum.EasingDirection.Out), {
+    Size = UDim2.new(0,200,0,200),
+    ImageTransparency = 0
+}):Play()
+
+-- Xoay logo
+task.spawn(function()
+    while logo.Parent do
+        logo.Rotation = logo.Rotation + 0.5
+        task.wait(0.01)
+    end
+end)
+
+-- Chữ bên dưới logo
+local msg = Instance.new("TextLabel")
+msg.Parent = gui
+msg.AnchorPoint = Vector2.new(0.5,0)
+msg.Position = UDim2.new(0.5,0,0.75,0)
+msg.Size = UDim2.new(0,600,0,80)
+msg.BackgroundTransparency = 1
+msg.Text = "Abatocom Hub"
+msg.TextColor3 = Color3.fromRGB(0,255,255)
+msg.Font = Enum.Font.GothamBlack
+msg.TextScaled = true
+msg.TextStrokeTransparency = 0
+msg.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+msg.TextTransparency = 1
+
+-- Chữ fade in
+TweenService:Create(msg, TweenInfo.new(1.2), {TextTransparency=0}):Play()
+
+-- Giữ intro 4s
+task.wait(4)
+
+-- Fade out tất cả
+TweenService:Create(logo, TweenInfo.new(1.2), {ImageTransparency=1}):Play()
+TweenService:Create(msg, TweenInfo.new(1.2), {TextTransparency=1}):Play()
+TweenService:Create(bg, TweenInfo.new(1.2), {BackgroundTransparency=1}):Play()
+task.wait(1.5)
+
+gui:Destroy()
+
+------------------------------------------------------------
+-- 🎛 MAIN UI BUTTON
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local ImageButton = Instance.new("ImageButton")
+ImageButton.Parent = ScreenGui
+ImageButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
+ImageButton.BorderSizePixel = 0
+ImageButton.Position = UDim2.new(0.1,0,0.15,0)
+ImageButton.Size = UDim2.new(0,40,0,40)
+ImageButton.Draggable = true
+ImageButton.Image = "http://www.roblox.com/asset/?id= 107480130072331"
+
+local UICorner = Instance.new("UICorner")
+UICorner.Parent = ImageButton
+UICorner.CornerRadius = UDim.new(1,10)
+
+ImageButton.MouseButton1Down:Connect(function()
+    game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.End,false,game)
+end)
+
+------------------------------------------------------------
+-- 📦 LOAD FLUENT
+repeat task.wait() until game:IsLoaded()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title="Skibidi Toilet Hub",
+    SubTitle="Tổng Hợp Script",
+    TabWidth=157,
+    Size=UDim2.fromOffset(450,300),
+    Acrylic=true,
+    Theme="Dark",
+    MinimizeKey=Enum.KeyCode.End
+}
+
+--Tabs
+local Tabs = {
+    Main0=Window:AddTab({Title="Thông Tin"}),
+    Main1=Window:AddTab({Title="Blox Fruits"}),
+    Main2=Window:AddTab({Title="Steal A Thối Não"}),
+    Main3=Window:AddTab({Title="99 Nights In The Forest"})
+    Main4=Window:AddTab({Title="Cưỡi Động Vật"})
+   Main5=Window:AddTab({Title="Script Vớ Vẩn"})
+}
+
+-- Tab 0: Thông Tin
+Tabs.Main0:AddButton({
+    Title="Group",
+    Description="quocbaodev",
+    Callback=function()
+        setclipboard("https://discord.gg/jBSTg3Sb")
+    end
+})
+
+-- Tab 1: Blox Fruits
+Tabs.Main1:AddButton({
+    Title="Redz Hub",
+    Callback=function()
+        local Settings={JoinTeam="Pirates",Translator=true}
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/newredz/BloxFruits/refs/heads/main/Source.luau"))(Settings)
+    end
+})
+Tabs.Main1:AddButton({
+    Title="w-azure Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/85e904ae1ff30824c1aa007fc7324f8f.lua"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Fix Lag",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TurboLite/Script/main/FixLag.lua"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Min Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/Min/refs/heads/main/MinXt2Eng"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Speed Hub X",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Than Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/thantzy/thanhub/refs/heads/main/thanv1"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="BlueX HUb",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Tsoul Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/Tsuoscripts"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="Volcano Hub V3",
+    Callback=function()
+        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/indexeduu/BF-NewVer/refs/heads/main/V3New.lua"))()
+    end
+})
+Tabs.Main1:AddButton({
+    Title="HOHO Hub",
+    Callback=function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()
+    end
+})
+-- Tab 2: Steal A Thối Não
+Tabs.Main2:AddButton({
+    Title="Aniti Hit",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/UCT-hub/main/refs/heads/main/UCTpvp"))()
+    end
+})
+Tabs.Main2:AddButton({
+    Title="LKZ HUB",
+    Callback=function()
+        loadstring(game:HttpGet("https://ra.githubusercontent.com/LucasggkX/Games/refs/heads/main/Auto%20Fishing.lua"))()
+    end
+})
+Tabs.Main2:AddButton({
+    Title="No Lag Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Loader/Main.lua"))()
+    end
+})
+Tabs.Main2:AddButton({
+    Title="Sv Vip",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ily123950/vulkan/refs/heads/main/Tr"))()
+    end
+})
+Tabs.Main2:AddButton({
+    Title="Chili Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/chili.lua"))()
+    end
+})
+Tabs.Main2:AddButton({
+    Title="Lemon Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ZenithExility/ZenikazeHub/refs/heads/main/ZenikazeV3.1"))()
+    end
+})
+
+-- Tab 3: 99 Nights In The Forest
+Tabs.Main3:AddButton({
+    Title="Voidware Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/nightsintheforest.lua", true))()
+    end
+})
+Tabs.Main3:AddButton({
+    Title="Gec Vip",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GEC0/gec/refs/heads/main/Gec.Loader", true))()
+    end
+})
+Tabs.Main3:AddButton({
+    Title="VietNam Hub ( Keyless )",
+    Callback=function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/newbie0z-lol/preprt/refs/heads/main/preprt.lua"))()
+    end
+})
+-- Tab 4: Cưỡi Động Vật
+Tabs.Main2:AddButton({
+    Title="DoDo Hub",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/dodohubx-rgb/dodohub/refs/heads/main/loader.luau"))()
+    end
+}) 
+-- Tab 5: Script Vớ Vẩn
+Tabs.Main2:AddButton({
+    Title="HitBox",
+    Callback=function()
+        loadstring(game:HttpGet("https://pastefy.app/ItfO0tdg/raw"))()
+    end
+})
+Tabs.Main5:AddButton({
+    Title="Bá Quá Aim",
+    Callback=function()
+       repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Daensolit/dangdeptrai/refs/heads/mlem/despacito.lua"))()
+    end
+})
+Tabs.Main5:AddButton({
+    Title="Bom V2",
+    Callback=function()
+       loadstring(game:HttpGet("https://pastefy.app/zR85Ybcp/raw", true))()
+    end
+})
+Tabs.Main5:AddButton({
+    Title="Fly v3",
+    Callback=function()
+   loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+    end
+})
